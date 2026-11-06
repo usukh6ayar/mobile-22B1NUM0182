@@ -3,29 +3,9 @@
 **Нэр:** Usukhbayar  
 **Оюутны код:** 22B1NUM0182
 
-Энэ репозиторид 6 долоо хоногийн турш бүх лабораторийн кодоо хадгална.
-
-```
-├── README.md          ← энэ файл (доорх хэсгүүдийг бөглөнө)
-├── screenshots/       ← дэлгэцийн зураг
-├── lab1_dart/         ← Лаборатори 1: Dart дасгал
-└── shoplite/          ← Лаборатори 1-д `flutter create`-оор үүсгэнэ
-```
-
-## Код хадгалах (лаборатори бүрийн төгсгөлд)
-
-```bash
-git add .
-git commit -m "Lab 1: Dart модель, shoplite апп"
-git push
-git tag v0.1            # Лаб 1 → v0.1, Лаб 2 → v0.2, ...
-git push origin v0.1
-```
-
-Push хийсний дараа GitHub дээрх **Actions** табаас автомат тестийн үр дүнг (ногоон ✓ / улаан ✗) харна.
-`lab1_dart/test/` болон `.github/` хавтасны файлуудыг **өөрчлөхгүй**.
-
----
+- `lab1_dart/` — Лаборатори 1, Dart дасгал
+- `shoplite/` — Flutter апп
+- `screenshots/` — дэлгэцийн зураг
 
 ## Лаборатори 1
 
@@ -40,20 +20,20 @@ Push хийсний дараа GitHub дээрх **Actions** табаас авт
 ### D2. Төслийн бүтэц
 
 1. `lib/main.dart`-д ямар классууд байна? Аль нь StatelessWidget, аль нь StatefulWidget вэ?
-   > `MyApp` (одоо `ShopLiteApp`) — StatelessWidget, MaterialApp-ийг үүсгэнэ. `MyHomePage` — StatefulWidget, гарчгийг (`title`) авна. `_MyHomePageState` — `MyHomePage`-ийн State класс, `_count` хувьсагчийг хадгалж `setState`-ээр дэлгэцийг шинэчилнэ.
+   > `ShopLiteApp` (анх `MyApp`) нь StatelessWidget. `MyHomePage` нь StatefulWidget, түүний төлөв `_MyHomePageState` классд байна.
 2. `pubspec.yaml`-д ямар сангууд байна?
-   > dependencies: `flutter` (SDK), `cupertino_icons` (iOS загварын icon-ууд). dev_dependencies: `flutter_test` (widget тест бичих), `flutter_lints` (кодын хэв маягийн шалгалт).
+   > dependencies: `flutter`, `cupertino_icons`. dev_dependencies: `flutter_test`, `flutter_lints`.
 3. `android/` хавтас юунд хэрэгтэй вэ? Та ихэвчлэн аль хавтсанд код бичих вэ?
-   > `android/` нь Android-д зориулсан native төсөл (Gradle тохиргоо, AndroidManifest.xml, applicationId, icon г.м). Flutter апп-ыг APK болгож build хийхэд хэрэглэгдэнэ. Код ихэвчлэн `lib/` хавтсанд (Dart), тестээ `test/` хавтсанд бичнэ.
+   > `android/` дотор Android-д build хийх тохиргоо (Gradle, AndroidManifest) байна. Би кодоо ихэвчлэн `lib/` хавтсанд бичнэ.
 
 ### D4. Hot reload ба hot restart
 
 | Өөрчлөлт | Hot reload (r) | Hot restart (R) |
 |---|---|---|
-| AppBar-ийн гарчгийг өөрчлөх | Гарчиг шууд солигдсон, тоолуур 3 хэвээр | Гарчиг солигдсон, тоолуур 0 болсон |
-| seed өнгийг солих | Өнгө шууд солигдсон, тоолуур 3 хэвээр | Өнгө солигдсон, тоолуур 0 болсон |
-| `int _count = 0;` → `= 5` | Юу ч өөрчлөгдөөгүй, тоолуур 3 хэвээр | Тоолуур 5 болсон |
-| `main()` дотор `print('start');` нэмэх | Терминалд юу ч хэвлэгдээгүй | Терминалд `start` хэвлэгдсэн, тоолуур 0 болсон |
+| AppBar-ийн гарчгийг өөрчлөх | Гарчиг солигдсон, тоо 3 хэвээр | Гарчиг солигдсон, тоо 0 болсон |
+| seed өнгийг солих | Өнгө солигдсон, тоо 3 хэвээр | Өнгө солигдсон, тоо 0 болсон |
+| `int _count = 0;` → `= 5` | Өөрчлөгдөөгүй, тоо 3 хэвээр | Тоо 5 болсон |
+| `main()` дотор `print('start');` нэмэх | Юу ч хэвлэгдээгүй | `start` хэвлэгдсэн |
 
 **Дүгнэлт:** аль тохиолдолд тоолуурын утга (state) хадгалагдсан бэ? Яагаад?
-> Hot reload (r) хийхэд бүх тохиолдолд тоолуур хадгалагдсан. Hot reload нь шинэ кодыг ачаалаад зөвхөн `build()`-ийг дахин дууддаг, State объект хэвээрээ үлддэг. Тиймээс `_count = 5` гэсэн анхны утга (State үүсэх үед нэг л удаа олгогддог) болон `main()` дахин ажиллахгүй. Hot restart (R) нь аппыг `main()`-оос эхнээс нь ажиллуулж, бүх State-ийг шинээр үүсгэдэг тул тоолуур анхны утга руугаа (0 эсвэл 5) буцна.
+> Hot reload хийхэд тоо хадгалагдсан. Hot reload зөвхөн `build()`-ийг дахин ажиллуулдаг, State хэвээрээ үлддэг. Hot restart аппыг `main()`-оос дахин эхлүүлдэг тул State шинээр үүсч, тоо анхны утга руугаа буцсан.
